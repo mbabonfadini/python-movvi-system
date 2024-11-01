@@ -1,0 +1,1 @@
+from .autentication_required import AuthenticatedView

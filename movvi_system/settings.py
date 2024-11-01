@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 from decouple import config
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,12 +22,29 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^j##d%y=ea@0!)gj+=c6a@_&k(w$)&zuo_a0e7edp4%qvyny#q'
+SECRET_KEY = config('JWT_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),  # Tempo de expiração do token
+    'REFRESH_TOKEN_LIFETIME': timedelta(hours=12),    # Tempo de expiração do refresh token
+    'AUTH_HEADER_TYPES': ('Bearer',),
+   # 'SECRET_KEY': config('JWT_SECRET_KEY'),          # Chave secreta do JWT
+}
+
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+]
 
 
 # Application definition
@@ -54,6 +72,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'api.middleware.AccessTokenMiddleware',
 ]
 
 ROOT_URLCONF = 'movvi_system.urls'
@@ -109,6 +128,10 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+
+
 
 
 # Internationalization
