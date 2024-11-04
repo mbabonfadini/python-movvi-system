@@ -2,3 +2,11 @@ from .usuario import UsuarioSerializer
 from .login import LoginSerializer
 from .filial import FilialSerializer
 from .setor import SetorSerializer
+from .status import StatusSerializer
+from .cargo import CargoSerializer
+from .role import RoleSerializer
+from .usuario_role import UsuarioRoleSerializer
+from .tipo_senha import TipoSenhaSerializer
+from .tipo_operacao_frete import TipoOperacaoFreteSerializer
+from .solicitacao_tipo import SolicitacaoTipoSerializer
+from .solicitacao import SolicitacaoSerializer

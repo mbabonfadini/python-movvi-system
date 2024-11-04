@@ -1,26 +1,27 @@
 from rest_framework import serializers
-from ..models import Filial
+from ..models import Role
 from datetime import datetime
 
-class FilialSerializer(serializers.Serializer):
+class RoleSerializer(serializers.Serializer):
     id: int = serializers.IntegerField(read_only=True)
-    sigla: str = serializers.CharField(max_length=3)
-    nome: str = serializers.CharField(max_length=150)
+    descricao: str = serializers.CharField(max_length=150)
     data_criacao: datetime = serializers.DateTimeField(read_only=True)
     data_atualizacao: datetime = serializers.DateTimeField(read_only=True)
-
+    
+    def validate_descricao(self, value): 
+        if Role.objects.filter(descricao=value).exists():
+            raise serializers.ValidationError(f'A role {value} já existe!')
+        return value
+    
     def create(self, validated_data):
-        filial: Filial = Filial(**validated_data)
-        filial.save()
-        return filial
+        role: Role = Role(**validated_data)
+        role.save()
+        return role
 
     def update(self, instance, validated_data):
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
+        
         instance.save()
+        
         return instance
-    
-    def validate_sigla(self, value):
-        if Filial.objects.filter(sigla=value).exists():
-            raise serializers.ValidationError("A sigla deve ser única.")
-        return value

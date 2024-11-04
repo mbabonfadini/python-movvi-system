@@ -8,19 +8,31 @@ from ..utils import AuthenticatedView
 class SetorListView(AuthenticatedView, generics.ListAPIView):
     serializer_class = SetorSerializer
 
+
+
+
     def get_queryset(self):
         return get_list_or_404(Setor)
 
-class SetorDetailView(AuthenticatedView, generics.RetrieveAPIView):
+
+
+
+class SetorDetailView( AuthenticatedView, generics.RetrieveAPIView):
     queryset = Setor.objects.all()
     serializer_class = SetorSerializer
 
     def get_object(self):
-        setor_id = self.kwargs.get('pk')
+        setor_id: int = self.kwargs.get('pk')
         return get_object_or_404(Setor, pk=setor_id)
     
+
+
+
 class SetorCreateView(AuthenticatedView , generics.CreateAPIView):
     serializer_class = SetorSerializer
+
+
+
 
 class SetorUpdateView(AuthenticatedView , generics.UpdateAPIView):
     queryset = Setor.objects.all()

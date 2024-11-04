@@ -28,8 +28,10 @@ SECRET_KEY = config('JWT_SECRET_KEY')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
+        'rest_framework_simplejwt.authentication.JWTAuthentication',),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,  # Número de itens por página
+    'MAX_PAGE_SIZE': 100 # Número máximo de itens por página
 }
 
 SIMPLE_JWT = {

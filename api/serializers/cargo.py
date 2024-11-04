@@ -1,23 +1,24 @@
 from rest_framework import serializers
-from ..models import Setor
+from ..models import Cargo, Status
 from datetime import datetime
 
-class SetorSerializer(serializers.Serializer):
+class CargoSerializer(serializers.Serializer):
     id: int = serializers.IntegerField(read_only=True)
     descricao: str = serializers.CharField(max_length=150)
+    status: int = serializers.PrimaryKeyRelatedField(queryset=Status.objects.all())
     data_criacao: datetime = serializers.DateTimeField(read_only=True)
     data_atualizacao: datetime = serializers.DateTimeField(read_only=True)
 
-    def validate_setor(self, value):
-        if Setor.objects.filter(descricao=value).exists():
-            raise serializers.ValidationError("Este setor já existe!")
-        return value
-
-    def create(self, validated_data):
-        setor: Setor = Setor(**validated_data)
-        setor.save()
+    def validate_cargo(self, value):
+        if Cargo.objects.filter(descricao=value).exists():
+            raise serializers.ValidationError(f'Cargo {value} já existe! Por favor inserir valor unico!')
         
-        return setor
+        return value
+    
+    def create(self, validated_data):
+        cargo: Cargo = Cargo(**validated_data)
+        cargo.save()
+        return cargo
 
     def update(self, instance, validated_data):
         
@@ -25,5 +26,4 @@ class SetorSerializer(serializers.Serializer):
             setattr(instance, attr, value)
         
         instance.save()
-        
         return instance

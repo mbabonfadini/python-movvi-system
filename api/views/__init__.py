@@ -2,3 +2,11 @@ from .usuarios import *
 from .login import *
 from .filial import *
 from .setor import *
+from .status import *
+from .cargo import *
+from .role import *
+from .usuario_role import *
+from .tipo_senha import *
+from .tipo_operacao_frete import *
+from .solicitacao_tipo import *
+from .solicitacao import *

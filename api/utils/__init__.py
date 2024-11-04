@@ -1,1 +1,2 @@
 from .autentication_required import AuthenticatedView
+from .CustomPagination import CustomPagination

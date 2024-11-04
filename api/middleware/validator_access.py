@@ -8,11 +8,9 @@ class AccessTokenMiddleware:
 
     def __call__(self, request):
         auth_header = request.headers.get('Authorization')
-        print("Middleware AccessTokenMiddleware chamado")
 
         if auth_header and auth_header.startswith('Bearer '):
             token = auth_header.split(' ')[1]
-            print(f"Token encontrado: {token}")  # Aqui você imprime o token encontrado
             
             try:
                 # Valida o token e obtém o usuário

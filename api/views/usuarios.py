@@ -3,15 +3,15 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404, get_list_or_404
 from ..models import Usuario
 from ..serializers import UsuarioSerializer
-from ..utils import AuthenticatedView
+from ..utils import AuthenticatedView, CustomPagination
 # Create your views here.
 
 class UsuarioListView(AuthenticatedView, generics.ListAPIView):
     serializer_class = UsuarioSerializer
+    pagination_class = CustomPagination
 
     def get_queryset(self):
         return get_list_or_404(Usuario) 
-
 
 
 
@@ -25,13 +25,8 @@ class UsuarioDetailView(AuthenticatedView, generics.RetrieveAPIView):
 
 
 
-
-
 class UsuarioCreateView(AuthenticatedView, generics.CreateAPIView):
     serializer_class = UsuarioSerializer
-
-
-
 
 
 
