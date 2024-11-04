@@ -1,8 +1,8 @@
 from django.db import models
 
 class Status(models.Model):
-    fn_status_id = models.AutoField(primary_key=True)
-    descricao = models.CharField(max_length=50, db_column='fs_status_descricao')
+    id: int = models.AutoField(primary_key=True, db_column='fn_status_id')
+    descricao: str = models.CharField(max_length=50, db_column='fs_status_descricao')
 
     class Meta:
         db_table = 't_status'

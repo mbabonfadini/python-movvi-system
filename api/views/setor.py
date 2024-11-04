@@ -3,14 +3,15 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404, get_list_or_404
 from ..serializers import SetorSerializer
 from ..models import Setor
+from ..utils import AuthenticatedView
 
-class SetorListView(generics.ListAPIView):
+class SetorListView(AuthenticatedView, generics.ListAPIView):
     serializer_class = SetorSerializer
 
     def get_queryset(self):
         return get_list_or_404(Setor)
 
-class SetorDetailView(generics.RetrieveAPIView):
+class SetorDetailView(AuthenticatedView, generics.RetrieveAPIView):
     queryset = Setor.objects.all()
     serializer_class = SetorSerializer
 
@@ -18,10 +19,10 @@ class SetorDetailView(generics.RetrieveAPIView):
         setor_id = self.kwargs.get('pk')
         return get_object_or_404(Setor, pk=setor_id)
     
-class SetorCreateView(generics.CreateAPIView):
+class SetorCreateView(AuthenticatedView , generics.CreateAPIView):
     serializer_class = SetorSerializer
 
-class SetorUpdateView(generics.UpdateAPIView):
+class SetorUpdateView(AuthenticatedView , generics.UpdateAPIView):
     queryset = Setor.objects.all()
     serializer_class =SetorSerializer
 

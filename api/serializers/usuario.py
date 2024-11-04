@@ -10,10 +10,10 @@ class UsuarioSerializer(serializers.Serializer):
     sobrenome: str = serializers.CharField(max_length=150)
     email: str = serializers.EmailField()
     senha: str = serializers.CharField(write_only=True)
-    filial = serializers.PrimaryKeyRelatedField(queryset=Filial.objects.all())
-    setor = serializers.PrimaryKeyRelatedField(queryset=Setor.objects.all())
-    cargo = serializers.PrimaryKeyRelatedField(queryset=Cargo.objects.all())
-    status = serializers.PrimaryKeyRelatedField(queryset=Status.objects.all())
+    filial: int = serializers.PrimaryKeyRelatedField(queryset=Filial.objects.all())
+    setor: int = serializers.PrimaryKeyRelatedField(queryset=Setor.objects.all())
+    cargo: int = serializers.PrimaryKeyRelatedField(queryset=Cargo.objects.all())
+    status: int = serializers.PrimaryKeyRelatedField(queryset=Status.objects.all())
     data_criacao: datetime = serializers.DateTimeField(read_only=True)
     data_atualizacao: datetime = serializers.DateTimeField(read_only=True)
 
@@ -24,7 +24,7 @@ class UsuarioSerializer(serializers.Serializer):
     
     def create(self, validated_data):
         validated_data['senha'] = make_password(validated_data.pop('senha'))  # Corrigido aqui
-        usuario = Usuario(**validated_data)
+        usuario: Usuario = Usuario(**validated_data)
         usuario.save()
         return usuario
     

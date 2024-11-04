@@ -10,7 +10,7 @@ class FilialSerializer(serializers.Serializer):
     data_atualizacao: datetime = serializers.DateTimeField(read_only=True)
 
     def create(self, validated_data):
-        filial = Filial(**validated_data)
+        filial: Filial = Filial(**validated_data)
         filial.save()
         return filial
 

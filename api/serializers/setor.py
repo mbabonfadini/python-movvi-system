@@ -14,7 +14,7 @@ class SetorSerializer(serializers.Serializer):
         return value
 
     def create(self, validated_data):
-        setor = Setor(**validated_data)
+        setor: Setor = Setor(**validated_data)
         setor.save()
         
         return setor

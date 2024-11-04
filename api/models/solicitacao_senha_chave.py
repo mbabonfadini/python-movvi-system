@@ -3,10 +3,10 @@ from api.models import SolicitacaoSenha, Status
 import hashlib
 
 class SolicitacaoSenhaChave(models.Model):
-    fn_solicitacao_senha_chave_id = models.AutoField(primary_key=True)
-    solicitacao_senha = models.ForeignKey(SolicitacaoSenha, on_delete=models.RESTRICT, db_column='fn_solicitacao_senha_id')
-    chave = models.CharField(max_length=10, db_column='fs_solicitacao_senha_chave', unique=True)
-    status = models.ForeignKey(Status, on_delete=models.CASCADE, db_column='fn_status_id')
+    id: int = models.AutoField(primary_key=True, db_column='fn_solicitacao_senha_chave_id')
+    solicitacao_senha: int  = models.ForeignKey(SolicitacaoSenha, on_delete=models.RESTRICT, db_column='fn_solicitacao_senha_id')
+    chave: str = models.CharField(max_length=10, db_column='fs_solicitacao_senha_chave', unique=True)
+    status: int = models.ForeignKey(Status, on_delete=models.CASCADE, db_column='fn_status_id')
 
     class Meta:
         db_table = 't_solicitacao_senha_chave'

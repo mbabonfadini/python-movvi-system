@@ -3,16 +3,19 @@ from django.contrib.auth.hashers import check_password
 from ..models import Usuario
 
 class LoginSerializer(serializers.Serializer):
-    email = serializers.EmailField()
-    senha = serializers.CharField(write_only=True)
+    email: str = serializers.EmailField()
+    senha: str = serializers.CharField(write_only=True)
 
     def validate(self, attrs):
-        email = attrs.get('email')
-        senha = attrs.get('senha')
+        email: str = attrs.get('email')
+        senha: str = attrs.get('senha')
 
         try:
-            usuario = Usuario.objects.get(email=email)
+            usuario: Usuario = Usuario.objects.get(email=email)
         except Usuario.DoesNotExist:
+            raise serializers.ValidationError("Credenciais inválidas.")
+        
+        if usuario.status.id != 1:
             raise serializers.ValidationError("Credenciais inválidas.")
 
         if not check_password(senha, usuario.senha):
